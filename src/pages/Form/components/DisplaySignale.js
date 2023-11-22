@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import mapimage from "../images/map.png";
-import map1 from "../images/map1.jfif";
 import "./Display.css";
 
 
