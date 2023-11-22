@@ -21,7 +21,7 @@ const Display = () => {
       city: " ",
       pincode: 1234,
     },
-    signalIds:[],
+    signalIds:[200,300,400],
     
   });
 
@@ -57,7 +57,7 @@ const Display = () => {
       setFormData({
         ...formData,
           [e.target.name]:parseInt(e.target.value),
-          signalIds:new Array( parseInt(e.target.value)).fill(1).map((value, index) => value + index),
+          // signalIds:new Array( parseInt(e.target.value)).fill(1).map((value, index) => value + index),
       });
     }
     else{

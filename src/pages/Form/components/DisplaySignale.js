@@ -10,28 +10,25 @@ const DisplaySignale = () => {
 
     signalId:"",
     circleId:"",
-    signalStatus:"",
-    junctionType:"",
+    signalStatus:"working",
+    junctionType:"crossroads with traffic light",
 
     aspects:{
         currentColor:"red",
-        durationInSeconds:0,
-        green:0,
-        red:0,
-        yellow:0,
+        durationInSeconds:120
     },
     address:{
-        circleName: " ",
+        circleName: "",
         road: " ",
-        area: " ",
-        city: " ",
-        pincode:0,
+        area: "",
+        city: "",
+        pincode:123456,
       },
   
     location:{
-        latitude:1.1,
-        longitude:1.1,
-        angle:0,
+        latitude:23.09836977942196,
+        longitude:72.58817516748776,
+        angle:90,
     },
   });
 
@@ -49,7 +46,7 @@ const DisplaySignale = () => {
       });
      
     }
-    if(e.target.name==="currentColor" || e.target.name==="durationInSeconds" ||  e.target.name==="green" ||  e.target.name==="red" ||  e.target.name==="yellow")
+    if(e.target.name==="currentColor" || e.target.name==="durationInSeconds")
     {
         if(e.target.name!=="currentColor")
         {
@@ -95,6 +92,7 @@ const DisplaySignale = () => {
         
     }
     if(e.target.name==="latitude" || e.target.name==="longitude" || e.target.name==="angle"){
+        if(e.target.value>0){
         setFormSignalData({
             ...formSignalData,
             location:{
@@ -102,6 +100,7 @@ const DisplaySignale = () => {
               [e.target.name]: parseFloat(e.target.value),
             }
           });
+        }
     }
 
     }
@@ -121,6 +120,9 @@ const DisplaySignale = () => {
       if(response.ok)
       {
       alert('Form data submitted successfully!');
+      }
+      else{
+        alert('Error submitting form data');
       }
 
       
@@ -171,19 +173,6 @@ const DisplaySignale = () => {
               <label className="item">
               Duration In Seconds
                 <input type="number" name="durationInSeconds" value={formSignalData.aspects.durationInSeconds} onChange={handleChange}/>
-              </label>
-
-              <label className="item">
-              Green
-                <input type="number" name="green" value={formSignalData.aspects.green} onChange={handleChange}/>
-              </label>
-              <label className="item">
-              Red
-                <input type="number" name="red" value={formSignalData.aspects.red} onChange={handleChange} />
-              </label>
-              <label className="item">
-              Yellow
-                <input type="number" name="yellow" value={formSignalData.aspects.yellow} onChange={handleChange} />
               </label>
             </div>
           </form>
