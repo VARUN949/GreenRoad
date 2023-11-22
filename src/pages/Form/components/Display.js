@@ -9,7 +9,6 @@ const Display = () => {
 
   const [formData, setFormData] = useState({
     circleId:0,
-    numberOfSignals: 0,
     coordinates:{
       latitude: parseFloat(1.1),
       longitude: parseFloat(1.1),
@@ -20,9 +19,7 @@ const Display = () => {
       area: " ",
       city: " ",
       pincode: 1234,
-    },
-    signalIds:[200,300,400],
-    
+    }    
   });
 
 
@@ -57,7 +54,6 @@ const Display = () => {
       setFormData({
         ...formData,
           [e.target.name]:parseInt(e.target.value),
-          // signalIds:new Array( parseInt(e.target.value)).fill(1).map((value, index) => value + index),
       });
     }
     else{
@@ -150,10 +146,6 @@ const Display = () => {
               <label className="item">
                 Pincode
                 <input type="number" name="pincode" value={formData.address.pincode} onChange={handleChange}/>
-              </label>
-              <label className="item">
-                Number Of Signals
-                <input type="number" name="numberOfSignals" value={formData.numberOfSignals} onChange={handleChange} />
               </label>
               < h3>Location Information</h3>
 
