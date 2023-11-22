@@ -22,10 +22,10 @@ const Navbar = () => {
 <div className="menu-link">
   <ul>
     <li>
-      <a href="/abc">Request for location update</a>
+      <a href="/">Add Circle</a>
     </li>
     <li>
-      <a href="/abc">Add a location</a>
+      <a href="/signal">Add signal</a>
     </li>
   </ul>
 </div>

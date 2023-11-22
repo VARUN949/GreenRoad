@@ -2,14 +2,14 @@
     position: absolute;
     top : 100px;
     left: 100px;
-    height:35%;
+    height:100%;
     width: 35%;
 }
 .bgimg{
     filter:brightness(50%);
     width:100%;
-    height:488px;
-    overflow: hidden;
+    height:100%;
+    /* overflow: hidden; */
 }
 .form{
     colour:white;
@@ -24,10 +24,20 @@
     left :700px;
     width:35%;
     border-radius: 5%;
-    
-   
     background-color:white;
 }
+.container_sec{
+    padding-top: 10px;
+    position: absolute;
+    top:100px;
+    right :700px;
+    width:35%;
+    border-radius: 5%;
+    background-color:white;
+}
+.spacer {
+    margin-bottom: 30px; /* Adjust the value to create the desired space */
+  }
 h3{
 
     text-align: center;
