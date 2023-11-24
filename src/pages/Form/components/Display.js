@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import mapimage from "../images/map.png";
-import map1 from "../images/map1.jfif";
 import "./Display.css";
+import Signal from "./Signal";
 
 
 const Display = () => {
@@ -10,22 +10,22 @@ const Display = () => {
   const [formData, setFormData] = useState({
     circleId:0,
     coordinates:{
-      latitude: parseFloat(1.1),
-      longitude: parseFloat(1.1),
+      latitude: parseFloat(23.105555),
+      longitude: parseFloat(72.597444),
     },
     address:{
       circleName: " ",
       road: " ",
       area: " ",
       city: " ",
-      pincode: 1234,
-    }    
+      pincode: 123456,
+    }   
   });
-
-
-
-  // Array(formData.newNumberOfSignals).fill('')
-
+  const [numberOfSignals,setNumberOfSignals]=useState({
+    number:0,
+    list:[],
+    condition:[true,false]
+  });
   const handleChange = (e) => {
 
     if(e.target.name==="circleName" || e.target.name==="road" ||  e.target.name==="area" ||  e.target.name==="city" ||  e.target.name==="pincode")
@@ -47,24 +47,6 @@ const Display = () => {
      
     }
 
-    if(e.target.name==="numberOfSignals")
-    {
-      console.log(e.target.value)
-      if(e.target.value>0){
-      setFormData({
-        ...formData,
-          [e.target.name]:parseInt(e.target.value),
-      });
-    }
-    else{
-      setFormData({
-        ...formData,
-          [e.target.name]: e.target.value,
-      });
-    }
-    }
-    
-
     if(e.target.name==="latitude" || e.target.name==="longitude")
     {
       setFormData({
@@ -75,8 +57,13 @@ const Display = () => {
         }
       });
     }
-    // console.log(formData);
-    
+    if(e.target.name==="numberOfSignals")
+    {
+      setNumberOfSignals({
+        ...numberOfSignals,
+        number:Number(e.target.value)
+      })
+    }    
   };
   const handleSubmit = async (e) => {
    
@@ -103,17 +90,21 @@ const Display = () => {
     } catch (error) {
       alert('Error submitting form data');
     }
+    setNumberOfSignals({
+      ...numberOfSignals,
+      list:Array.from({ length: numberOfSignals.number - 1 + 1 }, (_, index) => 1 + index),
+      status:Array.from({ length: numberOfSignals.number }, () => false)
+    })
+    console.log(numberOfSignals);
   };
+
 
   return (
     <>
       <div className="map">
         <img src={mapimage} className="bgimg" alt="" />
 
-        <div className="mapimage">
-          <img src={map1} alt="" />
-        </div>
-        <div className="container">
+        <div className="container_sec">
           <h3 >Basic Information</h3>
 
           <form onSubmit={handleSubmit} >
@@ -121,6 +112,11 @@ const Display = () => {
               <label className="item">
                 circleId
                 <input type="number" name="circleId" value={formData.circleId} onChange={handleChange}/>
+              </label>
+
+              <label className="item">
+                Number of Signals
+                <input type="number" name="numberOfSignals" value={numberOfSignals.number} onChange={handleChange}/>
               </label>
 
               <label className="item">
@@ -162,6 +158,15 @@ const Display = () => {
               <input type="submit" className="button" value="Add a Location "/>
             </div>
           </form>
+        </div>
+
+        <div className="container">
+          {numberOfSignals.list.map((signal,index)=>{
+            return(
+              
+              <Signal formData={formData} numberOfSignals={numberOfSignals} setNumberOfSignals={setNumberOfSignals} key={index} signalID={signal} ></Signal>
+            )
+          })}
         </div>
       </div>
     </>
