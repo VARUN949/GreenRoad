@@ -24,9 +24,6 @@ const Navbar = () => {
     <li>
       <a href="/">Add Circle</a>
     </li>
-    <li>
-      <a href="/signal">Add signal</a>
-    </li>
   </ul>
 </div>
    </nav>
