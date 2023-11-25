@@ -24,7 +24,7 @@ const Display = () => {
   const [numberOfSignals,setNumberOfSignals]=useState({
     number:0,
     list:[],
-    condition:[true,false]
+    condition:[]
   });
   const handleChange = (e) => {
 
@@ -77,15 +77,12 @@ const Display = () => {
         body: JSON.stringify(formData),
       });
 
-        console.log(formData);
-
 
       if(response.ok)
       {
       alert('Form data submitted successfully!');
       }
 
-      console.log(formData);
       
     } catch (error) {
       alert('Error submitting form data');
@@ -93,10 +90,11 @@ const Display = () => {
     setNumberOfSignals({
       ...numberOfSignals,
       list:Array.from({ length: numberOfSignals.number - 1 + 1 }, (_, index) => 1 + index),
-      status:Array.from({ length: numberOfSignals.number }, () => false)
+      condition:Array.from({ length: numberOfSignals.number }, () => false)
     })
-    console.log(numberOfSignals);
   };
+
+
 
 
   return (
@@ -163,8 +161,7 @@ const Display = () => {
         <div className="container">
           {numberOfSignals.list.map((signal,index)=>{
             return(
-              
-              <Signal formData={formData} numberOfSignals={numberOfSignals} setNumberOfSignals={setNumberOfSignals} key={index} signalID={signal} ></Signal>
+              <Signal formData={formData} numberOfSignals={numberOfSignals} setNumberOfSignals={setNumberOfSignals} key={index} ID={signal} ></Signal>
             )
           })}
         </div>

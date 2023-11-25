@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import "./Display.css";
 
 
-export default function Signal({formData,SignalID,numberOfSignals,setNumberOfSignals}) {
+export default function Signal({formData,ID,numberOfSignals,setNumberOfSignals}) {
 
     const [formSignalData, setFormSignalData] = useState({
 
@@ -31,7 +31,6 @@ export default function Signal({formData,SignalID,numberOfSignals,setNumberOfSig
       });
    
       const handleChange=(e)=>{
-
         if(e.target.name==="signalId"){
             setFormSignalData({
                 ...formSignalData,
@@ -47,18 +46,17 @@ export default function Signal({formData,SignalID,numberOfSignals,setNumberOfSig
                     }
                   });
         }
-        console.log(formSignalData)
 
       }
       const handleSubmit= async(e) =>{
         e.preventDefault();
         const updateCondition=[...numberOfSignals.condition]
-        updateCondition[SignalID]=true
+        updateCondition[ID]=true
         setNumberOfSignals({
             ...numberOfSignals,
             condition:updateCondition
         })
-
+        const element = document.getElementById(`signal${ID}`);        
         try {
           const response = await fetch('https://greenroad-gr.onrender.com/app/p1/add-signal-light', {
             method: 'POST',
@@ -70,6 +68,7 @@ export default function Signal({formData,SignalID,numberOfSignals,setNumberOfSig
           if(response.ok)
           {
           alert('Form data submitted successfully!');
+          element.style.display="none"
           }
           else{
             alert('Error submitting form data');
@@ -82,10 +81,10 @@ export default function Signal({formData,SignalID,numberOfSignals,setNumberOfSig
 
       }
   return (
-    <div>
+    <div id={`signal${ID}`}>
      <form onSubmit={handleSubmit} >
-            <div className="info" >
-            <h3>signal {SignalID}</h3>
+            <div className="info">
+            <h3>signal {`${ID}`}</h3>
             <label className="item">
                 Signal ID
                 <input type="text" name="signalId" value={formSignalData.signalID} onChange={handleChange}/>
