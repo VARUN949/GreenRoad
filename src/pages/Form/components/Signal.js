@@ -13,7 +13,10 @@ export default function Signal({formData,ID,numberOfSignals,setNumberOfSignals})
     
         aspects:{
             currentColor:"red",
-            durationInSeconds:120
+            durationInSeconds:120,
+            red:20,
+            yellow:5,
+            green:5
         },
         address:{
             circleName:formData.address.circleName,
@@ -46,7 +49,16 @@ export default function Signal({formData,ID,numberOfSignals,setNumberOfSignals})
                     }
                   });
         }
-
+        if(e.target.name==="red" || e.target.name==="yellow" || e.target.name==="green"){
+          setFormSignalData({
+            ...formSignalData,
+            aspects:{
+              ...formSignalData.aspects,
+              [e.target.name]:parseInt(e.target.value)
+            }
+          })
+        }
+        // console.log(formSignalData)
       }
       const handleSubmit= async(e) =>{
         e.preventDefault();
@@ -65,6 +77,7 @@ export default function Signal({formData,ID,numberOfSignals,setNumberOfSignals})
             },
             body: JSON.stringify(formSignalData),
           });
+          // console.log(formSignalData)
           if(response.ok)
           {
           alert('Form data submitted successfully!');
@@ -99,6 +112,23 @@ export default function Signal({formData,ID,numberOfSignals,setNumberOfSignals})
                 longitude
                 <input type="number" name="longitude" value={formSignalData.location.longitude} onChange={handleChange}/>
               </label>
+
+              <label className="item">
+                Red
+                <input type="number" name="red" value={formSignalData.aspects.red} onChange={handleChange}/>
+              </label>
+
+              <label className="item">
+                Yellow
+                <input type="number" name="yellow" value={formSignalData.aspects.yellow} onChange={handleChange}/>
+              </label>
+
+              <label className="item">
+                Green
+                <input type="number" name="green" value={formSignalData.aspects.green} onChange={handleChange}/>
+              </label>
+
+              
               <input type="submit" className="button" value="Add a Signal "/>
             </div>
           </form>
