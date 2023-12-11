@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 
-export default function Circle({ circle,getAllCircle }) {
+export default function Circle({ circle, getAllCircle }) {
+
+    const [signalStatus, setsignalStatus] = useState('')
 
     const deleteCircle = async (e) => {
         e.preventDefault()
@@ -24,54 +26,70 @@ export default function Circle({ circle,getAllCircle }) {
         e.preventDefault()
 
         circle.signalIds.map(async (signalId, index) => {
-           const response = await fetch(`https://greenroad-gr.onrender.com/app/p1/on-signal/${signalId}`, {
+            const response = await fetch(`https://greenroad-gr.onrender.com/app/p1/on-signal/${signalId}`, {
                 method: 'GET',
             });
-            if(signalId===circle.signalIds[circle.signalIds.length-1]){
+            if (signalId === circle.signalIds[circle.signalIds.length - 1]) {
                 if (response.ok) {
                     alert('Circle started successfully');
                 }
-                else{
+                else {
                     alert('Error deleteing in circle');
                 }
             }
-            else{
+            else {
                 if (!response.ok) {
                     alert('Error deleteing in circle');
                 }
-                else{
+                else {
                 }
             }
         })
+        workingStatus()
     }
 
     const stopCircle = async (e) => {
         e.preventDefault()
-        let response=0;
+        let response = 0;
         circle.signalIds.map(async (signalId, index) => {
-                 response = await fetch(`https://greenroad-gr.onrender.com/app/p1/off-signal/${signalId}`, {
-                    method: 'GET',
-                  });
+            response = await fetch(`https://greenroad-gr.onrender.com/app/p1/off-signal/${signalId}`, {
+                method: 'GET',
+            });
 
-                  if(signalId===circle.signalIds[circle.signalIds.length-1]){
-                    if (response.ok) {
-                        alert('Circle stopped successfully');
-                    }
-                    else{
-                        alert('Error deleteing in circle');
-                    }
+            if (signalId === circle.signalIds[circle.signalIds.length - 1]) {
+                if (response.ok) {
+                    alert('Circle stopped successfully');
                 }
-                else{
-                    if (!response.ok) {
-                        alert('Error deleteing in circle');
-                    }
-                    else{
-                    }
+                else {
+                    alert('Error deleteing in circle');
                 }
+            }
+            else {
+                if (!response.ok) {
+                    alert('Error deleteing in circle');
+                }
+                else {
+                }
+            }
         })
-       
-    }
+        workingStatus()
 
+    }
+    const workingStatus = async (e) => {
+        const response = await fetch(`https://greenroad-gr.onrender.com/app/p1/get-signal/bycircle`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"circleId":circle.circleId}),
+        });
+        const data=await response.json();
+        setsignalStatus(data.signals[0].signalStatus)
+    }
+    useEffect(() => {
+        workingStatus()
+    }, [])
+    
 
     return (
         <>
@@ -88,6 +106,10 @@ export default function Circle({ circle,getAllCircle }) {
                     <div className='flex'>
                         <p className='text-2xl font-semibold mr-5'>Number Of Signals &nbsp;&nbsp;: </p>
                         <p className='text-2xl font-medium'>{circle.numberOfSignals}</p>
+                    </div>
+                    <div className='flex'>
+                        <p className='text-2xl font-semibold mr-5'>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </p>
+                        <p className='text-2xl font-medium'>{signalStatus}</p>
                     </div>
                 </div>
                 <div className='w-1/2 flex justify-center items-center'>
