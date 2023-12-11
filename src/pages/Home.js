@@ -35,7 +35,7 @@ function Home() {
           style={{
             height: "550px",
             width: "550px",
-            backgroundImage: `url(${map_img})`,
+            // backgroundImage: `url(${map_img})`,
             backgroundRepeat: "repeat",
           }}
         >
